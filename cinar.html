@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Barışalım mı? 🤝</title>
+
+<style>
+  body {
+    margin: 0;
+    height: 100vh;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #333;
+    overflow: hidden;
+    background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
+    position: relative;
+    text-align: center;
+    padding-top: 100px;
+  }
+
+  h1 {
+    font-size: 2.5em;
+    margin-bottom: 40px;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+    position: relative;
+    z-index: 2;
+  }
+
+  button {
+    font-size: 22px;
+    padding: 15px 30px;
+    margin: 20px;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    transition: all 0.3s ease;
+    user-select: none;
+    position: relative;
+    z-index: 2;
+  }
+
+  #evetBtn {
+    background-color: #4CAF50;
+    color: white;
+  }
+  #evetBtn:hover {
+    background-color: #45a049;
+    transform: scale(1.1);
+    box-shadow: 0 8px 20px rgba(76,175,80,0.6);
+  }
+
+  #hayir {
+    position: absolute;
+    background-color: #f44336;
+    color: white;
+    z-index: 2;
+  }
+  #hayir:hover {
+    background-color: #d32f2f;
+  }
+
+  .stars {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .star {
+    position: absolute;
+    background: white;
+    border-radius: 50%;
+    opacity: 0.8;
+    animation-name: twinkle;
+    animation-iteration-count: infinite;
+    animation-timing-function: ease-in-out;
+  }
+
+  @keyframes twinkle {
+    0%, 100% {opacity: 0.8;}
+    50% {opacity: 0.1;}
+  }
+
+  /* Barış mesaj kutusu */
+  #mesaj {
+    position: fixed;
+    bottom: -150px; /* başlangıçta ekran dışında */
+    left: 50%;
+    transform: translateX(-50%);
+    background: #4CAF50;
+    color: white;
+    font-size: 3em;
+    font-weight: bold;
+    padding: 30px 50px;
+    border-radius: 25px;
+    box-shadow: 0 8px 20px rgba(76,175,80,0.8);
+    z-index: 10;
+    user-select: none;
+    opacity: 0;
+  }
+
+  /* Yukarı çıkıp durma ve geri inme animasyonu */
+  @keyframes yukariGel {
+    0% { bottom: -150px; opacity: 0; }
+    20% { bottom: 40%; opacity: 1; }
+    60% { bottom: 40%; opacity: 1; }
+    100% { bottom: -150px; opacity: 0; }
+  }
+
+  .show {
+    animation: yukariGel 4s ease forwards;
+  }
+
+</style>
+</head>
+<body>
+
+<h1>Çınarla kavga ettin. Barışmak istiyor musun? 🤔💥</h1>
+
+<button id="evetBtn" onclick="evet()">Evet ✔️</button>
+<button id="hayir" onmouseover="kac()">Hayır ❌</button>
+
+<div class="stars"></div>
+
+<!-- Barış mesajı -->
+<div id="mesaj">BARIŞTINIZ 🎉🤝🎉</div>
+
+<script>
+  function evet(){
+    const mesajDiv = document.getElementById('mesaj');
+    mesajDiv.classList.remove('show'); // önce resetle
+    void mesajDiv.offsetWidth; // yeniden tetiklemek için hack
+    mesajDiv.classList.add('show');
+  }
+
+  function kac(){
+    let x = Math.random() * (window.innerWidth - 120);
+    let y = Math.random() * (window.innerHeight - 70);
+
+    let hayirBtn = document.getElementById("hayir");
+    hayirBtn.style.left = x + "px";
+    hayirBtn.style.top = y + "px";
+  }
+
+  // Yıldızlar
+  const starsContainer = document.querySelector('.stars');
+  const starCount = 50;
+
+  for(let i=0; i<starCount; i++){
+    const star = document.createElement('div');
+    star.classList.add('star');
+
+    const size = Math.random() * 2 + 1;
+    star.style.width = size + 'px';
+    star.style.height = size + 'px';
+
+    star.style.top = Math.random() * 100 + 'vh';
+    star.style.left = Math.random() * 100 + 'vw';
+
+    star.style.animationDuration = (Math.random() * 3 + 2) + 's';
+    star.style.animationDelay = (Math.random() * 5) + 's';
+
+    starsContainer.appendChild(star);
+  }
+</script>
+
+</body>
+</html>
